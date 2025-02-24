@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Paulis Studio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Paulis Studio</h1>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <button id="googleLogin">Iniciar Sesión con Google</button>
+        <p>¿No tienes una cuenta? <a href="#" id="registerLink">Regístrate</a></p>
+    </div>
+
+    <div class="register-container" style="display: none;">
+        <h1>Regístrate</h1>
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Nombre completo" required>
+            <input type="email" id="newEmail" placeholder="Correo electrónico" required>
+            <input type="password" id="newPassword" placeholder="Contraseña" required>
+            <button type="submit">Registrarse</button>
+        </form>
+        <p>¿Ya tienes una cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

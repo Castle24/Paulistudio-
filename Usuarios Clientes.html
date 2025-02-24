@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Estilistas y Clientes - Paulis Studio</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa; /* Fondo azul clarito */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Estilos de la tabla */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #80deea; /* Color azul claro para encabezados */
+      color: #000;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Formularios */
+    .form-container {
+      margin-top: 20px;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      background-color: #80deea;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #4dd0e1;
+    }
+
+    /* Botones de acción */
+    .action-button {
+      background-color: #80deea;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-button:hover {
+      background-color: #4dd0e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Estilistas y Clientes - Paulis Studio</h1>
+
+    <!-- Formulario para agregar/editar registros -->
+    <div class="form-container">
+      <h2 id="form-title">Agregar Nuevo Registro</h2>
+      <input type="text" id="nombre" placeholder="Nombre">
+      <input type="text" id="telefono" placeholder="Teléfono">
+      <input type="text" id="tipo" placeholder="Tipo (Cliente/Estilista)">
+      <button onclick="guardarRegistro()" id="guardar-btn">Guardar</button>
+    </div>
+
+    <!-- Tabla para mostrar registros -->
+    <table id="registros-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Tipo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los registros se cargarán aquí dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Simulación de una base de datos usando localStorage
+    let registros = JSON.parse(localStorage.getItem("registros")) || [];
+    let editIndex = null;
+
+    // Función para guardar o actualizar un registro
+    function guardarRegistro() {
+      const nombre = document.getElementById("nombre").value;
+      const telefono = document.getElementById("telefono").value;
+      const tipo = document.getElementById("tipo").value;
+
+      if (nombre && telefono && tipo) {
+        if (editIndex === null) {
+          // Agregar nuevo registro
+          registros.push({ nombre, telefono, tipo });
+        } else {
+          // Actualizar registro existente
+          registros[editIndex] = { nombre, telefono, tipo };
+          editIndex = null;
+          document.getElementById("form-title").innerText = "Agregar Nuevo Registro";
+          document.getElementById("guardar-btn").innerText = "Guardar";
+        }
+
+        localStorage.setItem("registros", JSON.stringify(registros));
+        cargarRegistros();
+        limpiarFormulario();
+      } else {
+        alert("Por favor, complete todos los campos.");
+      }
+    }
+
+    // Función para cargar registros en la tabla
+    function cargarRegistros() {
+      const tableBody = document.querySelector("#registros-table tbody");
+      tableBody.innerHTML = "";
+
+      registros.forEach((registro, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${registro.nombre}</td>
+          <td>${registro.telefono}</td>
+          <td>${registro.tipo}</td>
+          <td>
+            <button class="action-button" onclick="editarRegistro(${index})">Editar</button>
+            <button class="action-button" onclick="eliminarRegistro(${index})">Eliminar</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Función para editar un registro
+    function editarRegistro(index) {
+      const registro = registros[index];
+      document.getElementById("nombre").value = registro.nombre;
+      document.getElementById("telefono").value = registro.telefono;
+      document.getElementById("tipo").value = registro.tipo;
+      editIndex = index;
+      document.getElementById("form-title").innerText = "Editar Registro";
+      document.getElementById("guardar-btn").innerText = "Actualizar";
+    }
+
+    // Función para eliminar un registro
+    function eliminarRegistro(index) {
+      if (confirm("¿Estás seguro de eliminar este registro?")) {
+        registros.splice(index, 1);
+        localStorage.setItem("registros", JSON.stringify(registros));
+        cargarRegistros();
+      }
+    }
+
+    // Función para limpiar el formulario
+    function limpiarFormulario() {
+      document.getElementById("nombre").value = "";
+      document.getElementById("telefono").value = "";
+      document.getElementById("tipo").value = "";
+    }
+
+    // Cargar registros al iniciar la página
+    window.onload = cargarRegistros;
+  </script>
+</body>
+</html>

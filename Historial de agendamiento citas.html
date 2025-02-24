@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Citas - Paulis Studio</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa; /* Fondo azul clarito */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Estilos de la tabla */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #80deea; /* Color azul claro para encabezados */
+      color: #000;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Botón de actualización */
+    .refresh-button {
+      background-color: #80deea;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .refresh-button:hover {
+      background-color: #4dd0e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Historial de Citas - Paulis Studio</h1>
+    <button class="refresh-button" onclick="loadAppointments()">Actualizar Citas</button>
+    <table id="appointments-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Cliente</th>
+          <th>Teléfono</th>
+          <th>Servicio</th>
+          <th>Estilista</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Las citas se cargarán aquí dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Datos de ejemplo (simulación de una base de datos)
+    const appointments = [
+      {
+        fecha: "25/02/2025",
+        hora: "10:00 AM",
+        cliente: "María González",
+        telefono: "+57 300 123 4567",
+        servicio: "Corte y tintura",
+        estilista: "Laura Martínez"
+      },
+      {
+        fecha: "25/02/2025",
+        hora: "11:30 AM",
+        cliente: "Carlos Rodríguez",
+        telefono: "+57 310 234 5678",
+        servicio: "Corte de cabello",
+        estilista: "Juan Pérez"
+      },
+      {
+        fecha: "25/02/2025",
+        hora: "02:00 PM",
+        cliente: "Ana López",
+        telefono: "+57 320 345 6789",
+        servicio: "Manicura y pedicura",
+        estilista: "Sofía Ramírez"
+      },
+      {
+        fecha: "25/02/2025",
+        hora: "04:00 PM",
+        cliente: "Luisa Fernández",
+        telefono: "+57 315 456 7890",
+        servicio: "Peinado para evento",
+        estilista: "Laura Martínez"
+      }
+    ];
+
+    // Función para cargar las citas en la tabla
+    function loadAppointments() {
+      const tableBody = document.querySelector("#appointments-table tbody");
+      tableBody.innerHTML = ""; // Limpiar la tabla antes de cargar
+
+      appointments.forEach(appointment => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${appointment.fecha}</td>
+          <td>${appointment.hora}</td>
+          <td>${appointment.cliente}</td>
+          <td>${appointment.telefono}</td>
+          <td>${appointment.servicio}</td>
+          <td>${appointment.estilista}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Cargar citas al iniciar la página
+    window.onload = loadAppointments;
+  </script>
+</body>
+</html>
