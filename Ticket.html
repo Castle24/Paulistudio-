@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamiento - Pauli's Studio</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1522338140262-f46f5913618a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #00796b; /* Color verde azulado */
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #00796b; /* Color verde azulado */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004d40; /* Color verde azulado más oscuro */
+        }
+
+        .voucher {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+        }
+
+        .voucher h2 {
+            color: #00796b; /* Color verde azulado */
+            margin-bottom: 10px;
+        }
+
+        .voucher p {
+            margin: 5px 0;
+        }
+
+        .voucher button {
+            margin: 10px 5px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agendamiento - Pauli's Studio</h1>
+        <form id="booking-form">
+            <input type="text" id="name" placeholder="Nombre del Cliente" required>
+            <input type="tel" id="phone" placeholder="Número Telefónico" required>
+            <input type="email" id="email" placeholder="Correo Electrónico" required>
+            <select id="service" required>
+                <option value="">Selecciona un Servicio</option>
+                <option value="corte">Corte de Cabello - $20</option>
+                <option value="color">Coloración - $50</option>
+                <option value="manicura">Manicura - $15</option>
+                <option value="pedicura">Pedicura - $20</option>
+                <option value="maquillaje">Maquillaje - $30</option>
+            </select>
+            <input type="text" id="stylist" placeholder="Nombre del Estilista" required>
+            <input type="date" id="date" required>
+            <input type="time" id="time" required>
+            <button type="submit">Generar Voucher</button>
+        </form>
+
+        <!-- Voucher -->
+        <div class="voucher" id="voucher">
+            <h2>Voucher de Agendamiento</h2>
+            <p><strong>Cliente:</strong> <span id="voucher-name"></span></p>
+            <p><strong>Teléfono:</strong> <span id="voucher-phone"></span></p>
+            <p><strong>Correo:</strong> <span id="voucher-email"></span></p>
+            <p><strong>Servicio:</strong> <span id="voucher-service"></span></p>
+            <p><strong>Estilista:</strong> <span id="voucher-stylist"></span></p>
+            <p><strong>Fecha:</strong> <span id="voucher-date"></span></p>
+            <p><strong>Hora:</strong> <span id="voucher-time"></span></p>
+            <p><strong>Precio:</strong> <span id="voucher-price"></span></p>
+            <p>¡Gracias por adquirir nuestros servicios!</p>
+            <button onclick="printVoucher()">Imprimir Voucher</button>
+            <button onclick="shareWhatsApp()">Compartir por WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        // Función para generar el voucher
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtener valores del formulario
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const service = document.getElementById('service').value;
+            const stylist = document.getElementById('stylist').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            // Calcular el precio según el servicio
+            let price = '';
+            switch (service) {
+                case 'corte':
+                    price = '$20';
+                    break;
+                case 'color':
+                    price = '$50';
+                    break;
+                case 'manicura':
+                    price = '$15';
+                    break;
+                case 'pedicura':
+                    price = '$20';
+                    break;
+                case 'maquillaje':
+                    price = '$30';
+                    break;
+            }
+
+            // Mostrar el voucher
+            document.getElementById('voucher-name').textContent = name;
+            document.getElementById('voucher-phone').textContent = phone;
+            document.getElementById('voucher-email').textContent = email;
+            document.getElementById('voucher-service').textContent = document.getElementById('service').options[document.getElementById('service').selectedIndex].text;
+            document.getElementById('voucher-stylist').textContent = stylist;
+            document.getElementById('voucher-date').textContent = date;
+            document.getElementById('voucher-time').textContent = time;
+            document.getElementById('voucher-price').textContent = price;
+
+            document.getElementById('voucher').style.display = 'block';
+
+            // Enviar correo electrónico (simulación)
+            sendEmail(name, email, stylist, service, date, time, price);
+
+            // Enviar WhatsApp (simulación)
+            sendWhatsApp(phone, name, service, date, time, price);
+        });
+
+        // Función para imprimir el voucher
+        function printVoucher() {
+            window.print();
+        }
+
+        // Función para compartir por WhatsApp
+        function shareWhatsApp() {
+            const name = document.getElementById('voucher-name').textContent;
+            const service = document.getElementById('voucher-service').textContent;
+            const date = document.getElementById('voucher-date').textContent;
+            const time = document.getElementById('voucher-time').textContent;
+            const price = document.getElementById('voucher-price').textContent;
+
+            const message = `¡Hola ${name}! Tu cita para ${service} el ${date} a las ${time} ha sido confirmada. Precio: ${price}. ¡Gracias por elegir Pauli's Studio!`;
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Función para enviar correo electrónico (simulación)
+        function sendEmail(name, email, stylist, service, date, time, price) {
+            const subject = `Confirmación de Cita - Pauli's Studio`;
+            const body = `¡Hola ${name}!\n\nTu cita para ${service} con ${stylist} el ${date} a las ${time} ha sido confirmada.\nPrecio: ${price}.\n\n¡Gracias por elegir Pauli's Studio!`;
+            const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
+        }
+
+        // Función para enviar WhatsApp (simulación)
+        function sendWhatsApp(phone, name, service, date, time, price) {
+            const message = `¡Hola ${name}! Tu cita para ${service} el ${date} a las ${time} ha sido confirmada. Precio: ${price}. ¡Gracias por elegir Pauli's Studio!`;
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
