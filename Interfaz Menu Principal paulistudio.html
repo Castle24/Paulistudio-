@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pauli's Studio Salon de Belleza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1522338140262-f46f5913618a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6f61; /* Color rosa salmón */
+            margin-bottom: 20px;
+        }
+
+        .menu-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            padding: 10px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .menu ul li:hover {
+            background-color: #ff6f61; /* Color rosa salmón */
+            border-radius: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #ff6f61; /* Color rosa salmón */
+        }
+
+        .card p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a Pauli's Studio Salon de Belleza</h1>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <div class="menu" id="menu">
+            <ul>
+                <li onclick="navigate('agenda')">Agenda</li>
+                <li onclick="navigate('registro')">Registro de Usuarios y Clientes</li>
+                <li onclick="navigate('servicios')">Lista de Servicios y Productos</li>
+                <li onclick="navigate('configuracion')">Configuración</li>
+                <li onclick="navigate('listado-agenda')">Listado de Agenda</li>
+                <li onclick="navigate('usuarios-acceso')">Revisar Usuarios con Acceso</li>
+                <li onclick="cerrarSesion()">Cerrar Sesión</li>
+            </ul>
+        </div>
+        <div class="grid" id="main-content">
+            <div class="card" onclick="navigate('agenda')">
+                <h2>Agenda</h2>
+                <p>Gestiona las citas de tus clientes.</p>
+            </div>
+            <div class="card" onclick="navigate('registro')">
+                <h2>Registro de Usuarios y Clientes</h2>
+                <p>Registra nuevos usuarios y clientes.</p>
+            </div>
+            <div class="card" onclick="navigate('servicios')">
+                <h2>Lista de Servicios y Productos</h2>
+                <p>Edita precios y servicios disponibles.</p>
+            </div>
+            <div class="card" onclick="navigate('configuracion')">
+                <h2>Configuración</h2>
+                <p>Configura la plataforma.</p>
+            </div>
+            <div class="card" onclick="navigate('listado-agenda')">
+                <h2>Listado de Agenda</h2>
+                <p>Revisa las citas programadas.</p>
+            </div>
+            <div class="card" onclick="navigate('usuarios-acceso')">
+                <h2>Revisar Usuarios con Acceso</h2>
+                <p>Gestiona los usuarios que tienen acceso.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar el menú
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Función para navegar entre secciones (simulación)
+        function navigate(section) {
+            alert(`Navegando a: ${section}`);
+            // Aquí puedes redirigir a otras páginas o cargar contenido dinámico
+        }
+
+        // Función para cerrar sesión
+        function cerrarSesion() {
+            alert('Cerrando sesión...');
+            // Aquí puedes redirigir a la página de inicio de sesión
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

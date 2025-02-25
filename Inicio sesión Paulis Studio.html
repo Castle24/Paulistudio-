@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pauli's Studio Salon de Belleza</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1522338140262-f46f5913618a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #ff6f61; /* Color rosa salmón */
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6f61; /* Color rosa salmón */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e65a50; /* Color rosa salmón más oscuro */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            color: #ff6f61; /* Color rosa salmón */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Página de Inicio de Sesión -->
+    <div class="container" id="login-container">
+        <h1>Iniciar Sesión</h1>
+        <input type="email" id="email" placeholder="Correo Electrónico" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button onclick="login()">Iniciar Sesión</button>
+    </div>
+
+    <!-- Interfaz de Bienvenida -->
+    <div class="container hidden" id="welcome-container">
+        <h1>Bienvenido a Pauli's Studio</h1>
+        <p class="welcome-message" id="welcome-message"></p>
+        <button onclick="logout()">Cerrar Sesión</button>
+    </div>
+
+    <script>
+        // Función para iniciar sesión
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Validación simple del correo electrónico
+            if (!email || !email.includes('@')) {
+                alert('Por favor, ingresa un correo electrónico válido.');
+                return;
+            }
+
+            // Validación simple de la contraseña
+            if (!password || password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+
+            // Ocultar el contenedor de inicio de sesión y mostrar el de bienvenida
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('welcome-container').classList.remove('hidden');
+
+            // Mostrar mensaje de bienvenida personalizado
+            const username = email.split('@')[0]; // Extraer el nombre del correo
+            document.getElementById('welcome-message').textContent = `¡Hola, ${username}!`;
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            // Ocultar el contenedor de bienvenida y mostrar el de inicio de sesión
+            document.getElementById('welcome-container').classList.add('hidden');
+            document.getElementById('login-container').classList.remove('hidden');
+
+            // Limpiar campos
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>

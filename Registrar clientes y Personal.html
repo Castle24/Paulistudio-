@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Clientes y Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa; /* Fondo azul claro */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00796b; /* Color verde azulado */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00796b; /* Color verde azulado */
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #00796b; /* Color verde azulado */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004d40; /* Color verde azulado más oscuro */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #confirmation {
+            margin-top: 20px;
+            text-align: center;
+            color: #00796b; /* Color verde azulado */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Clientes y Usuarios</h1>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="name">Nombre Completo:</label>
+                <input type="text" id="name" name="name" placeholder="Ingresa tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address" placeholder="Ingresa tu dirección" required>
+            </div>
+            <div class="form-group">
+                <label for="blood-type">Tipo de Sangre:</label>
+                <select id="blood-type" name="blood-type" required>
+                    <option value="">Selecciona tu tipo de sangre</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Número Telefónico:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ingresa tu número telefónico" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Fecha de Nacimiento:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="eps">EPS:</label>
+                <input type="text" id="eps" name="eps" placeholder="Ingresa tu EPS" required>
+            </div>
+            <div class="form-group">
+                <label for="id">Documento de Identidad:</label>
+                <input type="text" id="id" name="id" placeholder="Ingresa tu documento de identidad" required>
+            </div>
+            <div class="form-group">
+                <label for="guardian-name">Nombre del Acudiente:</label>
+                <input type="text" id="guardian-name" name="guardian-name" placeholder="Ingresa el nombre del acudiente" required>
+            </div>
+            <div class="form-group">
+                <label for="guardian-phone">Teléfono del Acudiente:</label>
+                <input type="tel" id="guardian-phone" name="guardian-phone" placeholder="Ingresa el teléfono del acudiente" required>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+        <div id="confirmation" class="hidden">
+            <h2>Registro Exitoso</h2>
+            <p id="confirmation-details"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const bloodType = document.getElementById('blood-type').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const dob = document.getElementById('dob').value;
+            const eps = document.getElementById('eps').value;
+            const id = document.getElementById('id').value;
+            const guardianName = document.getElementById('guardian-name').value;
+            const guardianPhone = document.getElementById('guardian-phone').value;
+
+            const confirmationDetails = `
+                <strong>Nombre:</strong> ${name}<br>
+                <strong>Dirección:</strong> ${address}<br>
+                <strong>Tipo de Sangre:</strong> ${bloodType}<br>
+                <strong>Correo Electrónico:</strong> ${email}<br>
+                <strong>Teléfono:</strong> ${phone}<br>
+                <strong>Fecha de Nacimiento:</strong> ${dob}<br>
+                <strong>EPS:</strong> ${eps}<br>
+                <strong>Documento de Identidad:</strong> ${id}<br>
+                <strong>Acudiente:</strong> ${guardianName}<br>
+                <strong>Teléfono del Acudiente:</strong> ${guardianPhone}
+            `;
+
+            document.getElementById('confirmation-details').innerHTML = confirmationDetails;
+            document.getElementById('confirmation').classList.remove('hidden');
+            document.getElementById('registration-form').reset();
+        });
+    </script>
+</body>
+</html>
